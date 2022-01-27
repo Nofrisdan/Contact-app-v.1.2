@@ -1,0 +1,68 @@
+
+<div class="container mt-4">
+    <h1 class="text-center">Form Ubah Data Kontak</h1>
+      <% if (typeof(errors) != "undefined") { %>
+        <div class="alert alert-danger" role="alert">
+          <strong>Terjadi kesalahan</strong>
+          <ul>
+            <% for( let i = 0; i < errors.length; i++ ) { %>
+              <li><%= errors[i].msg %></li>
+            <% } %>
+           
+          </ul>
+        </div>
+
+      <% } %>
+
+    <hr>
+
+<form method="POST" action="/kontak/edit">
+
+    <input type="hidden" name="id" value="<%= data.id %>">
+    <div class="form-group">
+      <label for="nama">Nama</label>
+      <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama " value="<%= data.nama %>" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email"  aria-describedby="emailHelp" name="email" value="<%= data.email %>" required  placeholder="Masukkan Alamat Email">
+      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+    <div class="form-group">
+        <label for="nohp">No HP</label>
+        <input type="text" class="form-control" name="nohp" id="nohp"placeholder="Masukkan Nomor HP anda " value="<%= data.nohp %>" required>
+      </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+
+  </form>
+</div>
+
+<%- contentFor("script") %>
+
+<script>
+
+  $("document").ready(function(){
+    $("form").submit(function(e){
+      e.preventDefault();
+
+           Swal.fire({
+                title: 'Apakah Kamu Yakin?',
+                text: "Mengubah Data Ini ",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yakin',
+                cancelButtonText : 'Batal',
+                reverseButtons : true,
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $(this).off("submit").submit();
+                   
+                    }
+                })
+    })
+  })
+</script>
+
